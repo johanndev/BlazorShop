@@ -37,7 +37,7 @@
                     <td><button 
                             class="badge badge-secondary" 
                             style="cursor: pointer;" 
-                            onclick="@(() => { SelectedProductId = item.Id; })">Details
+                            onclick="@(async () => SelectedProductId = item.Id)">Details
                         </button></td>
                 </tr>
             }

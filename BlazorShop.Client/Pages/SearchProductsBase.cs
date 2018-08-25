@@ -1,6 +1,9 @@
 ﻿using BlazorShop.Client.Services;
+using BlazorShop.Client.Shared;
 using BlazorShop.Shared.Models.Search;
+using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace BlazorShop.Client.Pages
@@ -19,7 +22,9 @@ namespace BlazorShop.Client.Pages
         public int CurrentPage { get; set; } = 0;
         public int ResultCount { get; set; } = 10;
 
-        public int SelectedProductId { get; set; } = 0;
+        public int SelectedProductId { get; set; } 
+
+        public bool ShowOverlay { get; set; }
 
         protected async override Task OnInitAsync()
         {
@@ -28,6 +33,7 @@ namespace BlazorShop.Client.Pages
 
         public async Task StartSearch()
         {
+            SelectedProductId = 0;
             SearchResult = null;
             var searchRequest = new SearchRequest
             {

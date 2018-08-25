@@ -31,16 +31,21 @@
     [Parameter]
     private Action<int> ProductIdChanged { get; set; }
 
-
     private bool ShowOverlay { get; set; }
     private Product Product { get; set; }
+
+    private int LastId { get; set; }
 
     protected async override Task OnParametersSetAsync()
     {
         if (ProductId != 0)
         {
-            Product = await DataService.GetProductDetails(ProductId);
+            if (ProductId != LastId)
+            {
+                Product = await DataService.GetProductDetails(ProductId);
+            }
             ShowOverlay = true;
+            LastId = ProductId;
         }
     }
 }
