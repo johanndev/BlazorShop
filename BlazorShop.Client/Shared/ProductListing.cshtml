@@ -1,0 +1,32 @@
+﻿@using BlazorShop.Shared.Models
+@using BlazorShop.Shared.Models.Search
+
+<div>
+    ItemsPerPage: @ItemsPerPage
+    Category: @Category
+</div>
+
+@if (Items == null || !Items.Any())
+{
+    <p>No Items have been loaded!</p>
+}
+else
+{
+    @foreach (var item in Items)
+    {
+        <div class="itemContainer">
+            <div>@item.Title</div>
+            <div>@item.HtmlDescription</div>
+        </div>
+    }
+}
+
+@functions {
+    [Parameter]
+    private Category Category { get; set; } = Category.Apparel | Category.Bicycles | Category.Fashion | Category.Jewelry | Category.Snowdevil;
+    [Parameter]
+    private List<SearchResultItem> Items { get; set; }
+    [Parameter]
+    private int ItemsPerPage { get; set; } = 10;
+
+}

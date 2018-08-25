@@ -1,0 +1,48 @@
+﻿@using BlazorShop.Shared.Models.Search
+@page "/search"
+@inherits SearchProductsBase
+
+<h1>Search Products</h1>
+<div class="searchInput">
+    <input bind="@SearchText" />
+    <button type="button" class="btn btn-primary" onclick="@StartSearch">Click me</button>
+    @if (SearchResult == null)
+    {
+        <div class="lds-dual-ring"></div>
+    }
+
+</div>
+
+@if (SearchResult != null)
+{
+    <p>Found @SearchResult.Overview.TotalResult items!</p>
+    <table class="table table-striped table-sm table-hover searchTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Vendor</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in SearchResult.ResultItems)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Vendor</td>
+                    <td>@item.HtmlDescription</td>
+                    <td>@item.Category</td>
+                    <td><button 
+                            class="badge badge-secondary" 
+                            style="cursor: pointer;" 
+                            onclick="@(() => { SelectedProductId = item.Id; })">Details
+                        </button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<ProductDetail bind-ProductId="@SelectedProductId"></ProductDetail>
