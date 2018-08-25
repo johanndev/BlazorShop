@@ -42,7 +42,7 @@ namespace BlazorShop.Server.BusinessLogic
 
             IQueryable<Product> query = blazorShopDbContext.Products;
 
-            var searchText = searchRequest.FreeTextFilter.Trim();
+            var searchText = searchRequest.FreeTextFilter.Trim().ToLower();
 
             if (searchText.Any())
             {

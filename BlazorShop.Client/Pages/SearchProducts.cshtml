@@ -34,11 +34,13 @@
                     <td>@item.Vendor</td>
                     <td>@item.HtmlDescription</td>
                     <td>@item.Category</td>
-                    <td><button 
-                            class="badge badge-secondary" 
-                            style="cursor: pointer;" 
-                            onclick="@(async () => SelectedProductId = item.Id)">Details
-                        </button></td>
+                    <td>
+                        <button class="badge badge-secondary"
+                                style="cursor: pointer;"
+                                onclick="@(_ => SelectedProductId = item.Id)">
+                            Details
+                        </button>
+                    </td>
                 </tr>
             }
         </tbody>

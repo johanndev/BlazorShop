@@ -24,8 +24,6 @@ namespace BlazorShop.Client.Pages
 
         public int SelectedProductId { get; set; } 
 
-        public bool ShowOverlay { get; set; }
-
         protected async override Task OnInitAsync()
         {
             await StartSearch();
@@ -35,14 +33,14 @@ namespace BlazorShop.Client.Pages
         {
             SelectedProductId = 0;
             SearchResult = null;
-            var searchRequest = new SearchRequest
+            SearchRequest = new SearchRequest
             {
                 FreeTextFilter = SearchText?.Trim()?.ToLower() ?? string.Empty,
                 PageIndex = 0,
                 PageSize = ResultCount
             };
 
-            SearchResult = await DataService.SearchProducts(searchRequest);
+            SearchResult = await DataService.SearchProducts(SearchRequest);
         }
     }
 }
