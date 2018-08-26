@@ -1,5 +1,5 @@
 # Stage 1: Compile and publish the source code
-FROM microsoft/dotnet:2.1.401-sdk AS builder
+FROM microsoft/dotnet:2.1.300-sdk AS builder
 WORKDIR /app
 
 COPY *.sln ./
