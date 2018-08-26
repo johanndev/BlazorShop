@@ -29,7 +29,7 @@
     [Parameter]
     private int ProductId { get; set; }
     [Parameter]
-    private Action<int> ProductIdChanged { get; set; }
+    private int Token { get; set; }
 
     private bool ShowOverlay { get; set; }
     private Product Product { get; set; }
@@ -38,6 +38,7 @@
 
     protected async override Task OnParametersSetAsync()
     {
+
         if (ProductId != 0)
         {
             if (ProductId != LastId)
@@ -48,4 +49,5 @@
             LastId = ProductId;
         }
     }
+
 }

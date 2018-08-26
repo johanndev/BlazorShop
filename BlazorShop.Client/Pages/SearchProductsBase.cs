@@ -22,7 +22,12 @@ namespace BlazorShop.Client.Pages
         public int CurrentPage { get; set; } = 0;
         public int ResultCount { get; set; } = 10;
 
-        public int SelectedProductId { get; set; } 
+        public int SelectedProductId { get; set; }
+        public int Token { get; set; }
+        public int GetNextToken()
+        {
+            return Token += 1;
+        }
 
         protected async override Task OnInitAsync()
         {

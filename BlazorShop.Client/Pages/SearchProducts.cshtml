@@ -37,7 +37,7 @@
                     <td>
                         <button class="badge badge-secondary"
                                 style="cursor: pointer;"
-                                onclick="@(_ => SelectedProductId = item.Id)">
+                                onclick="@(_ => { SelectedProductId = item.Id; Token = GetNextToken(); })">
                             Details
                         </button>
                     </td>
@@ -47,4 +47,4 @@
     </table>
 }
 
-<ProductDetail bind-ProductId="@SelectedProductId"></ProductDetail>
+<ProductDetail Token="@Token" ProductId="@SelectedProductId"></ProductDetail>
