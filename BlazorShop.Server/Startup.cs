@@ -26,7 +26,7 @@ namespace BlazorShop.Server
         {
             services.AddDbContext<Data.BlazorShopDbContext>(options =>
             {
-                options.UseSqlite("Data Source=BlazorShop.db");
+                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddScoped<IProductManager, ProductManager>();
@@ -46,14 +46,6 @@ namespace BlazorShop.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-
-                serviceScope.ServiceProvider.GetService<Data.BlazorShopDbContext>()
-                    .Database.Migrate();
-            }
-
             app.UseResponseCompression();
 
             if (env.IsDevelopment())
