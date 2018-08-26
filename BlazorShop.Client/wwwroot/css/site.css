@@ -131,6 +131,12 @@ app {
 
 .searchInput {
     display: flex;
+    justify-content: flex-start;
+}
+
+.searchInputItem {
+    margin-right: 5px;
+    align-self: auto;
 }
 /*Spinner*/
 .lds-dual-ring {
@@ -162,6 +168,29 @@ app {
     100% {
         transform: rotate(360deg);
     }
+}
+
+/*ProductListing*/
+
+.productListingContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.productCard {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    margin: 2vw;
+    flex-grow: 1;
+    min-height: 200px;
+    flex-basis: 200px;
+    display: flex;
+    padding: 10px;
+}
+
+.productListingContainer .productCard {
+    min-width: 200px;
 }
 
 

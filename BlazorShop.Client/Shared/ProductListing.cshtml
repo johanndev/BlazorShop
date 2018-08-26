@@ -1,32 +1,51 @@
 ﻿@using BlazorShop.Shared.Models
 @using BlazorShop.Shared.Models.Search
+@using BlazorShop.Client.Services;
+@inject IDataService DataService
 
-<div>
-    ItemsPerPage: @ItemsPerPage
-    Category: @Category
-</div>
-
-@if (Items == null || !Items.Any())
-{
-    <p>No Items have been loaded!</p>
-}
-else
-{
-    @foreach (var item in Items)
+<div class="productListingContainer">
+    <h3>@GetDisplayValue(ProductCategory)</h3>
+    @if (SearchResult == null || !SearchResult.ResultItems.Any())
     {
-        <div class="itemContainer">
-            <div>@item.Title</div>
-            <div>@item.HtmlDescription</div>
+        <div class="productCard">
+            <div class="lds-dual-ring searchInputItem"></div>
         </div>
     }
-}
+    else
+    {
+        @foreach (var item in SearchResult.ResultItems)
+        {
+            <div class="productCard">
+                <div>@item.Title</div>
+                <div>@item.HtmlDescription</div>
+            </div>
+        }
+    }
+</div>
 
 @functions {
     [Parameter]
-    private Category Category { get; set; } = Category.Apparel | Category.Bicycles | Category.Fashion | Category.Jewelry | Category.Snowdevil;
+    private Category ProductCategory { get; set; } = Category.Apparel | Category.Bicycles | Category.Fashion | Category.Jewelry | Category.Snowdevil;
     [Parameter]
-    private List<SearchResultItem> Items { get; set; }
+    private SearchResult SearchResult { get; set; }
     [Parameter]
     private int ItemsPerPage { get; set; } = 10;
+
+    protected async override Task OnInitAsync()
+    {
+        var searchRequest = new SearchRequest
+        {
+            PageSize = ItemsPerPage,
+            Category = ProductCategory
+
+        };
+        SearchResult = await DataService.SearchProducts(searchRequest);
+    }
+
+    private string GetDisplayValue(Category ProductCategory)
+    {
+        Category result = (Category)ProductCategory;
+        return result.ToString();
+    }
 
 }

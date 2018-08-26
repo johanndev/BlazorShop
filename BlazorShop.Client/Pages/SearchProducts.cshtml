@@ -4,11 +4,11 @@
 
 <h1>Search Products</h1>
 <div class="searchInput">
-    <input bind="@SearchText" disabled="@SearchInProgress" onkeyup="@HandleEnterKey"/>
-    <button type="button" class="btn btn-primary" disabled="@SearchInProgress" onclick="@StartSearch">Click me</button>
+    <input class="searchInputItem" bind="@SearchText" disabled="@SearchInProgress" onkeyup="@HandleEnterKey" />
+    <button type="button" class="btn btn-primary searchInputItem" disabled="@SearchInProgress" onclick="@StartSearch">Click me</button>
     @if (SearchResult == null)
     {
-        <div class="lds-dual-ring"></div>
+        <div class="lds-dual-ring searchInputItem"></div>
     }
 
 </div>

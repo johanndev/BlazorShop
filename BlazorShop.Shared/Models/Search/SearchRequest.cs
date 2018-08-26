@@ -9,6 +9,6 @@ namespace BlazorShop.Shared.Models.Search
         public string FreeTextFilter { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-
+        public Category Category { get; set; } = Category.Apparel | Category.Bicycles | Category.Fashion | Category.Jewelry | Category.Snowdevil;
     }
 }
