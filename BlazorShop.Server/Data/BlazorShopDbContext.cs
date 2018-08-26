@@ -25,6 +25,7 @@ namespace BlazorShop.Server.Data
         {
             optionsBuilder
                 .ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+
         }
 
         public virtual DbSet<Product> Products { get; set; }

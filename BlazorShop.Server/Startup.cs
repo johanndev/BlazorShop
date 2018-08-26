@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Blazor.Server;
+﻿using BlazorShop.Server.BusinessLogic;
+using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 using System.Net.Mime;
-using BlazorShop.Server.BusinessLogic;
 
 namespace BlazorShop.Server
 {
@@ -47,6 +47,21 @@ namespace BlazorShop.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope())
+                {
+
+                    serviceScope.ServiceProvider.GetService<Data.BlazorShopDbContext>()
+                        .Database.Migrate();
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+
             app.UseResponseCompression();
 
             if (env.IsDevelopment())
