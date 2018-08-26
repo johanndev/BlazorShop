@@ -4,8 +4,8 @@
 
 <h1>Search Products</h1>
 <div class="searchInput">
-    <input bind="@SearchText" />
-    <button type="button" class="btn btn-primary" onclick="@StartSearch">Click me</button>
+    <input bind="@SearchText" disabled="@SearchInProgress" onkeyup="@HandleEnterKey"/>
+    <button type="button" class="btn btn-primary" disabled="@SearchInProgress" onclick="@StartSearch">Click me</button>
     @if (SearchResult == null)
     {
         <div class="lds-dual-ring"></div>

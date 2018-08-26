@@ -18,6 +18,7 @@ namespace BlazorShop.Client.Pages
         public SearchRequest SearchRequest { get; set; }
         public SearchResult SearchResult { get; set; }
         public string SearchText { get; set; }
+        public bool SearchInProgress { get; set; }
 
         public int CurrentPage { get; set; } = 0;
         public int ResultCount { get; set; } = 10;
@@ -36,6 +37,7 @@ namespace BlazorShop.Client.Pages
 
         public async Task StartSearch()
         {
+            SearchInProgress = true;
             SelectedProductId = 0;
             SearchResult = null;
             SearchRequest = new SearchRequest
@@ -46,6 +48,16 @@ namespace BlazorShop.Client.Pages
             };
 
             SearchResult = await DataService.SearchProducts(SearchRequest);
+
+            SearchInProgress = false;
+        }
+
+        public async Task HandleEnterKey(UIKeyboardEventArgs args)
+        {
+            if (args.Key == "Enter")
+            {
+                await StartSearch();
+            }
         }
     }
 }
