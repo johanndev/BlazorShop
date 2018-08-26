@@ -14,11 +14,6 @@ namespace BlazorShop.Server
 
         public static IWebHostBuilder BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.AddEnvironmentVariables();
-                    config.AddCommandLine(args);
-                })
                 .UseStartup<Startup>();
     }
 }
