@@ -9,11 +9,12 @@ namespace BlazorShop.Server
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Build().Run();
+            BuildWebHost(args).Run();
         }
 
-        public static IWebHostBuilder BuildWebHost(string[] args) =>
+        public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .Build();
     }
 }

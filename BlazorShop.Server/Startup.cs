@@ -26,21 +26,10 @@ namespace BlazorShop.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
-            if (HostingEnvironment.IsDevelopment())
+            services.AddDbContext<Data.BlazorShopDbContext>(options =>
             {
-                services.AddDbContext<Data.BlazorShopDbContext>(options =>
-                {
-                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-                });
-            }
-            else if (HostingEnvironment.IsProduction())
-            {
-                services.AddDbContext<Data.BlazorShopDbContext>(options =>
-                {
-                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                });
-            }
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
 
             services.AddScoped<IProductManager, ProductManager>();
 
