@@ -14,20 +14,33 @@ namespace BlazorShop.Server
     public class Startup
     {
         private readonly IConfiguration Configuration;
+        public IHostingEnvironment HostingEnvironment { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            HostingEnvironment = hostingEnvironment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Data.BlazorShopDbContext>(options =>
+
+            if (HostingEnvironment.IsDevelopment())
             {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            });
+                services.AddDbContext<Data.BlazorShopDbContext>(options =>
+                {
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                });
+            }
+            else if (HostingEnvironment.IsProduction())
+            {
+                services.AddDbContext<Data.BlazorShopDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                });
+            }
 
             services.AddScoped<IProductManager, ProductManager>();
 
