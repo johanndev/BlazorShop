@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Linq;
 using System.Net.Mime;
 
@@ -47,19 +46,12 @@ namespace BlazorShop.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            try
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                .CreateScope())
             {
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-                    .CreateScope())
-                {
 
-                    serviceScope.ServiceProvider.GetService<Data.BlazorShopDbContext>()
-                        .Database.Migrate();
-                }
-            }
-            catch (Exception e)
-            {
-                throw;
+                serviceScope.ServiceProvider.GetService<Data.BlazorShopDbContext>()
+                    .Database.Migrate();
             }
 
             app.UseResponseCompression();
@@ -70,9 +62,9 @@ namespace BlazorShop.Server
             }
 
             app.UseMvc(routes =>
-            {
-                routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
-            });
+                    {
+                        routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
+                    });
 
             app.UseBlazor<Client.Program>();
         }
