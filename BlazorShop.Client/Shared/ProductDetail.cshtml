@@ -10,11 +10,15 @@
             <div class="product-info">
                 @if (Product != null)
                 {
-                    <p>Title</p>
-                    <p>@Product.Title</p>
+                    <div>
+                        <p>Title</p>
+                        <p>@Product.Title</p>
 
-                    <p>Description</p>
-                    <p>@Product.HtmlDescription</p>
+                        <p>Description</p>
+                        <p>@Product.HtmlDescription</p>
+                    </div>
+
+                    <img src="@Product.ImageSrc" />
                 }
                 else
                 {

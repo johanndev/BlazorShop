@@ -116,7 +116,14 @@ app {
 
 .product-info {
     grid-area: content;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
 }
+
+    .product-info img {
+        max-width: 200px;
+        vertical-align: middle;
+    }
 
 .overlay .closebtn {
     margin-right: -1rem;

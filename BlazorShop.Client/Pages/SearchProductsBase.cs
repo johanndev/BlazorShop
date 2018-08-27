@@ -24,7 +24,7 @@ namespace BlazorShop.Client.Pages
         public string SearchText { get; set; }
         public bool SearchInProgress { get; set; }
 
-        public int CurrentPage { get; set; } = 0;
+        public int CurrentPage { get; set; }
         public int ResultCount { get; set; } = 10;
         public Category SelectedCategory { get; set; }
 
@@ -49,7 +49,7 @@ namespace BlazorShop.Client.Pages
             SelectedCategory = (Category)Enum.Parse(typeof(Category), args.Value.ToString());
         }
 
-        public async Task StartSearch()
+        public async Task StartSearch(int pageIndex = 0)
         {
             SearchInProgress = true;
             SelectedProductId = 0;
@@ -57,13 +57,12 @@ namespace BlazorShop.Client.Pages
             SearchRequest = new SearchRequest
             {
                 FreeTextFilter = SearchText?.Trim()?.ToLower() ?? string.Empty,
-                PageIndex = 0,
+                PageIndex = pageIndex,
                 PageSize = ResultCount,
                 Category = SelectedCategory
             };
 
             SearchResult = await DataService.SearchProducts(SearchRequest);
-
             SearchInProgress = false;
 
             UriHelper.NavigateTo($"/search/{SelectedCategory}");

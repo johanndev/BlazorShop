@@ -19,7 +19,7 @@
                 }
             </select>
         </div>
-        <button type="button" class="btn btn-primary mb-2 mx-sm-3" disabled="@SearchInProgress" onclick="@StartSearch">Search!</button>
+        <button type="button" class="btn btn-primary mb-2 mx-sm-3" disabled="@SearchInProgress" onclick="@(() => StartSearch())">Search!</button>
     </div>
 
     @if (SearchResult == null)
