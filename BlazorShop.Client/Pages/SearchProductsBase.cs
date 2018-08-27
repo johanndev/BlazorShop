@@ -1,12 +1,10 @@
 ﻿using BlazorShop.Client.Services;
-using BlazorShop.Client.Shared;
 using BlazorShop.Shared.Models;
 using BlazorShop.Shared.Models.Search;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Threading.Tasks;
-using BlazorShop.Shared.Util;
 
 namespace BlazorShop.Client.Pages
 {
@@ -15,6 +13,10 @@ namespace BlazorShop.Client.Pages
         // Injected services
         [Inject]
         private IDataService DataService { get; set; }
+        [Inject]
+        private Microsoft.AspNetCore.Blazor.Services.IUriHelper UriHelper { get; set; }
+        [Parameter]
+        private string CategoryParam { get; set; }
 
         // Properties
         public SearchRequest SearchRequest { get; set; }
@@ -35,6 +37,10 @@ namespace BlazorShop.Client.Pages
 
         protected async override Task OnInitAsync()
         {
+            if (Enum.TryParse(CategoryParam, out Category parsedCategory))
+            {
+                SelectedCategory = parsedCategory;
+            }
             await StartSearch();
         }
 
@@ -59,6 +65,8 @@ namespace BlazorShop.Client.Pages
             SearchResult = await DataService.SearchProducts(SearchRequest);
 
             SearchInProgress = false;
+
+            UriHelper.NavigateTo($"/search/{SelectedCategory}");
         }
 
         public async Task HandleEnterKey(UIKeyboardEventArgs args)
