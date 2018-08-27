@@ -60,6 +60,12 @@ namespace BlazorShop.Server.BusinessLogic
                         );
             }
 
+            if (searchRequest.Category != Category.None)
+            {
+                query = query
+                    .Where(p => p.Category == searchRequest.Category);
+            }
+
             query = query.Where(p => p.Title.Length > 0);
 
             var totalResults = await query.CountAsync();

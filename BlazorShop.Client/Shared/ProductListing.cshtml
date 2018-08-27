@@ -4,7 +4,6 @@
 @inject IDataService DataService
 
 <div class="productListingContainer">
-    <h3>@GetDisplayValue(ProductCategory)</h3>
     @if (SearchResult == null || !SearchResult.ResultItems.Any())
     {
         <div class="productCard">
@@ -13,39 +12,45 @@
     }
     else
     {
+        <div class="productCard">
+            <h3>@GetDisplayValue(ProductCategory)</h3>
+        </div>
+
         @foreach (var item in SearchResult.ResultItems)
         {
             <div class="productCard">
-                <div>@item.Title</div>
-                <div>@item.HtmlDescription</div>
+                <a href="/bla">
+                    <div>@item.Title</div>
+                    <div>@item.HtmlDescription</div>
+                </a>
             </div>
         }
     }
 </div>
 
 @functions {
-    [Parameter]
-    private Category ProductCategory { get; set; } = Category.None;
-    [Parameter]
-    private SearchResult SearchResult { get; set; }
-    [Parameter]
-    private int ItemsPerPage { get; set; } = 10;
+[Parameter]
+private Category ProductCategory { get; set; } = Category.None;
+[Parameter]
+private SearchResult SearchResult { get; set; }
+[Parameter]
+private int ItemsPerPage { get; set; } = 10;
 
-    protected async override Task OnInitAsync()
+protected async override Task OnInitAsync()
+{
+    var searchRequest = new SearchRequest
     {
-        var searchRequest = new SearchRequest
-        {
-            PageSize = ItemsPerPage,
-            Category = ProductCategory
+        PageSize = ItemsPerPage,
+        Category = ProductCategory
 
-        };
-        SearchResult = await DataService.SearchProducts(searchRequest);
-    }
+    };
+    SearchResult = await DataService.SearchProducts(searchRequest);
+}
 
-    private string GetDisplayValue(Category ProductCategory)
-    {
-        Category result = (Category)ProductCategory;
-        return result.ToString();
-    }
+private string GetDisplayValue(Category ProductCategory)
+{
+    Category result = (Category)ProductCategory;
+    return result.ToString();
+}
 
 }

@@ -1,10 +1,12 @@
 ﻿using BlazorShop.Client.Services;
 using BlazorShop.Client.Shared;
+using BlazorShop.Shared.Models;
 using BlazorShop.Shared.Models.Search;
 using Microsoft.AspNetCore.Blazor;
 using Microsoft.AspNetCore.Blazor.Components;
 using System;
 using System.Threading.Tasks;
+using BlazorShop.Shared.Util;
 
 namespace BlazorShop.Client.Pages
 {
@@ -22,6 +24,7 @@ namespace BlazorShop.Client.Pages
 
         public int CurrentPage { get; set; } = 0;
         public int ResultCount { get; set; } = 10;
+        public Category SelectedCategory { get; set; }
 
         public int SelectedProductId { get; set; }
         public int Token { get; set; }
@@ -35,6 +38,11 @@ namespace BlazorShop.Client.Pages
             await StartSearch();
         }
 
+        public void SetCategory(UIChangeEventArgs args)
+        {
+            SelectedCategory = (Category)Enum.Parse(typeof(Category), args.Value.ToString());
+        }
+
         public async Task StartSearch()
         {
             SearchInProgress = true;
@@ -44,7 +52,8 @@ namespace BlazorShop.Client.Pages
             {
                 FreeTextFilter = SearchText?.Trim()?.ToLower() ?? string.Empty,
                 PageIndex = 0,
-                PageSize = ResultCount
+                PageSize = ResultCount,
+                Category = SelectedCategory
             };
 
             SearchResult = await DataService.SearchProducts(SearchRequest);
