@@ -20,7 +20,7 @@
         public string VariantSku { get; set; }
         public int? VariantGrams { get; set; }
         public int? VariantInventoryQty { get; set; }
-        public string VariantInventoryPolicy { get; set; }
+        public VariantInventoryPolicy VariantInventoryPolicy { get; set; }
         public int? VariantPrice { get; set; }
         public int? VariantCompareAtPrice { get; set; }
         public bool VariantRequiresShipping { get; set; }
@@ -29,6 +29,6 @@
         public string ImageAltText { get; set; }
         public bool GiftCard { get; set; }
         public string VariantImageSrc { get; set; }
-        public string VariantWeightUnit { get; set; }
+        public WeightUnit VariantWeightUnit { get; set; }
     }
 }

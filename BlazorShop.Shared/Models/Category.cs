@@ -2,6 +2,7 @@
 {
     public enum Category
     {
+        None,
         Apparel,
         Bicycles,
         Fashion,
